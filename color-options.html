@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kornerstone — Colour Scheme Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #18171c; color: #eee; }
+  .page-head { text-align: center; padding: 48px 24px 16px; }
+  .page-head h1 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.6rem; }
+  .page-head p { color: #9b97a6; margin-top: 8px; font-size: .95rem; }
+  .opt { padding: 40px 20px; }
+  .opt__inner { max-width: 1040px; margin: 0 auto; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(0,0,0,.6); }
+  .label { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; max-width:1040px; margin:0 auto 16px; padding:0 6px; }
+  .label .tag { font-family:'Outfit',sans-serif; font-weight:600; font-size:1.2rem; color:#fff; }
+  .label .name { color:#b9a7ff; font-weight:600; }
+  .label .desc { color:#9b97a6; font-size:.9rem; }
+  .swatches { display:flex; gap:0; }
+  .sw { flex:1; height:54px; display:flex; align-items:flex-end; justify-content:center; padding-bottom:6px; font-size:10px; font-family:'Inter'; letter-spacing:.02em; }
+  /* mini hero */
+  .mh { padding: 70px 50px; text-align:center; position:relative; overflow:hidden; }
+  .mh .eyebrow { font-size:11px; letter-spacing:.32em; text-transform:uppercase; font-weight:600; margin-bottom:18px; display:inline-block; }
+  .mh h2 { font-family:'Cormorant Garamond', serif; font-weight:600; font-size:clamp(2rem,4.4vw,3.4rem); line-height:1.05; letter-spacing:-.5px; }
+  .mh p { max-width:46ch; margin:18px auto 26px; font-size:1rem; line-height:1.6; }
+  .mh .btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .mh .btn { font-family:'Outfit',sans-serif; font-weight:600; font-size:14px; padding:13px 26px; border-radius:999px; border:1px solid transparent; cursor:pointer; }
+  .nav { display:flex; align-items:center; justify-content:space-between; padding:18px 50px; font-family:'Outfit'; font-size:13px; }
+  .nav .links { display:flex; gap:22px; }
+  .nav .brand { font-family:'Cinzel',serif; letter-spacing:.14em; font-weight:600; }
+
+  /* ---- A: Royal Amethyst (refined dark) ---- */
+  .A { background:radial-gradient(900px 500px at 70% 10%, rgba(124,92,246,.22), transparent 60%), linear-gradient(180deg,#0c0a14,#0a0810); }
+  .A .nav, .A { color:#f3f1f8; }
+  .A .nav .links a, .A .nav .brand { color:#c9c4d8; text-decoration:none; }
+  .A .eyebrow { color:#a78bfa; }
+  .A h2 { color:#f6f3fc; }
+  .A .grad { background:linear-gradient(100deg,#8b5cf6,#b9a7ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .A p { color:#a9a4ba; }
+  .A .btn1 { background:linear-gradient(120deg,#6d5ef0,#8b5cf6); color:#fff; }
+  .A .btn2 { background:transparent; color:#cbb9ff; border-color:rgba(167,139,250,.5); }
+
+  /* ---- B: Obsidian & Champagne (gold-led luxury) ---- */
+  .B { background:radial-gradient(900px 500px at 50% 0%, rgba(203,154,90,.16), transparent 60%), linear-gradient(180deg,#0c0b10,#0a090d); }
+  .B, .B .nav { color:#f2eee5; }
+  .B .nav .links a, .B .nav .brand { color:#c7c0b2; text-decoration:none; }
+  .B .eyebrow { color:#d8b56b; }
+  .B h2 { color:#f6f1e7; }
+  .B .grad { color:#e3c486; }
+  .B p { color:#a59e8f; }
+  .B .btn1 { background:linear-gradient(120deg,#cb9a5a,#e3c486); color:#1a1206; }
+  .B .btn2 { background:transparent; color:#e3c486; border-color:rgba(216,181,107,.5); }
+
+  /* ---- C: Ivory & Aubergine (light editorial luxury) ---- */
+  .C { background:linear-gradient(180deg,#f7f3ed,#efe9e0); }
+  .C, .C .nav { color:#2a2033; }
+  .C .nav .links a, .C .nav .brand { color:#4a3f56; text-decoration:none; }
+  .C .eyebrow { color:#9a6a2f; }
+  .C h2 { color:#241a2e; }
+  .C .grad { background:linear-gradient(100deg,#5a3a86,#8a5fb0); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .C p { color:#6b6275; }
+  .C .btn1 { background:linear-gradient(120deg,#4a2d6b,#6d419a); color:#fff; }
+  .C .btn2 { background:transparent; color:#7a4b1e; border-color:rgba(154,106,47,.45); }
+</style>
+</head>
+<body>
+<div class="page-head">
+  <h1>Three colour directions for Kornerstone</h1>
+  <p>Same layout, three palettes. Tell me which feels right — A, B or C — and I'll apply it across the whole site.</p>
+</div>
+
+<!-- OPTION A -->
+<div class="opt">
+  <div class="label"><span class="tag">A</span><span class="name">Royal Amethyst</span><span class="desc">Refined dark. One elegant violet (no magenta), soft lilac highlights, gold used only as a hairline. Calm and modern.</span></div>
+  <div class="opt__inner A">
+    <div class="nav"><span class="brand">KORNERSTONE</span><span class="links"><a>About</a><a>Meetings</a><a>Counselling</a><a>Give</a></span></div>
+    <div class="mh">
+      <span class="eyebrow">Kornerstone Prophetic Ministry</span>
+      <h2>Experience church <span class="grad">anywhere</span> in the world</h2>
+      <p>A digital-first prophetic ministry — the Word, prophetic direction and faith-based counselling, online or in Lagos.</p>
+      <div class="btns"><span class="btn btn1">Join a Live Meeting</span><span class="btn btn2">Book Counselling</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B -->
+<div class="opt">
+  <div class="label"><span class="tag">B</span><span class="name" style="color:#e3c486">Obsidian &amp; Champagne</span><span class="desc">Gold-led luxury. Champagne gold becomes the primary accent; purple recedes to a soft glow. Classic, expensive, timeless.</span></div>
+  <div class="opt__inner B">
+    <div class="nav"><span class="brand">KORNERSTONE</span><span class="links"><a>About</a><a>Meetings</a><a>Counselling</a><a>Give</a></span></div>
+    <div class="mh">
+      <span class="eyebrow">Kornerstone Prophetic Ministry</span>
+      <h2>Experience church <span class="grad">anywhere</span> in the world</h2>
+      <p>A digital-first prophetic ministry — the Word, prophetic direction and faith-based counselling, online or in Lagos.</p>
+      <div class="btns"><span class="btn btn1">Join a Live Meeting</span><span class="btn btn2">Book Counselling</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION C -->
+<div class="opt">
+  <div class="label"><span class="tag">C</span><span class="name" style="color:#8a5fb0">Ivory &amp; Aubergine</span><span class="desc">Light &amp; editorial. Warm ivory background, deep aubergine type, gold + violet accents. Bright, airy and premium — the opposite of heavy.</span></div>
+  <div class="opt__inner C">
+    <div class="nav"><span class="brand">KORNERSTONE</span><span class="links"><a>About</a><a>Meetings</a><a>Counselling</a><a>Give</a></span></div>
+    <div class="mh">
+      <span class="eyebrow">Kornerstone Prophetic Ministry</span>
+      <h2>Experience church <span class="grad">anywhere</span> in the world</h2>
+      <p>A digital-first prophetic ministry — the Word, prophetic direction and faith-based counselling, online or in Lagos.</p>
+      <div class="btns"><span class="btn btn1">Join a Live Meeting</span><span class="btn btn2">Book Counselling</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
