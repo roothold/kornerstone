@@ -100,8 +100,12 @@ p, .lead { text-wrap: pretty; }
 }
 .site-header.scrolled {
   padding: 12px 0; background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line), 0 10px 30px -20px rgba(0,0,0,.3);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--line), 0 10px 30px -20px rgba(0,0,0,.3);
 }
+/* When the mobile drawer is open, the header must NOT establish a containing
+   block (backdrop-filter does), or the fixed drawer collapses to header height. */
+.site-header.menu-open { backdrop-filter: none; -webkit-backdrop-filter: none; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .logo { display: flex; align-items: center; flex: none; }
 .logo img { height: 42px; width: auto; aspect-ratio: 1165 / 350; display: block; transition: opacity .3s; }

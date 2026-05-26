@@ -18,6 +18,7 @@
     toggle.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       toggle.classList.toggle('open', open);
+      if (header) header.classList.toggle('menu-open', open);
       document.body.style.overflow = open ? 'hidden' : '';
     });
     links.querySelectorAll('a').forEach((a) => {
@@ -25,6 +26,7 @@
         if (a.closest('.has-dropdown') && a.querySelector('.chev') && window.innerWidth <= 980) return;
         links.classList.remove('open');
         toggle.classList.remove('open');
+        if (header) header.classList.remove('menu-open');
         document.body.style.overflow = '';
       });
     });
