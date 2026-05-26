@@ -22,7 +22,7 @@
     });
     links.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => {
-        if (a.closest('.has-dropdown') && window.innerWidth <= 940) return;
+        if (a.closest('.has-dropdown') && a.querySelector('.chev') && window.innerWidth <= 980) return;
         links.classList.remove('open');
         toggle.classList.remove('open');
         document.body.style.overflow = '';
