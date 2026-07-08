@@ -162,6 +162,17 @@ p, .lead { text-wrap: pretty; }
     linear-gradient(95deg, rgba(6,7,12,0.94) 0%, rgba(6,7,12,0.76) 40%, rgba(6,7,12,0.5) 100%),
     linear-gradient(0deg, var(--ink) 1%, transparent 45%);
 }
+/* Portrait hero (praying subject) — shift subject right of the H1, lighten overlay so silhouette reads */
+.hero__bg--portrait img { opacity: .78; object-position: 70% center; }
+.hero__bg--portrait::after {
+  background:
+    linear-gradient(95deg, rgba(6,7,12,0.86) 0%, rgba(6,7,12,0.58) 42%, rgba(6,7,12,0.28) 100%),
+    linear-gradient(0deg, var(--ink) 1%, transparent 42%);
+}
+@media (max-width: 900px) {
+  .hero__bg--portrait img { object-position: 55% center; }
+  .hero__bg--portrait::after { background: linear-gradient(180deg, rgba(6,7,12,0.55) 0%, rgba(6,7,12,0.9) 100%); }
+}
 .hero .container { position: relative; z-index: 1; width: 100%; }
 .hero__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: center; }
 .hero__eyebrow { font-family: var(--display); font-size: .85rem; font-weight: 600; color: var(--blue-2); display: inline-block; margin-bottom: 18px; letter-spacing: .22em; text-transform: uppercase; }
