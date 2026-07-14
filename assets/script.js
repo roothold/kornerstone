@@ -224,4 +224,95 @@
   // Footer year
   const yr = document.getElementById('year');
   if (yr) yr.textContent = new Date().getFullYear();
+
+  // Timezone-aware meeting times.
+  // Any element carrying data-tz-start="HH:MM" and data-tz-zone="IANA" will be rewritten
+  // on page load to the visitor's local time with the local timezone abbreviation.
+  // Optional data-tz-end="HH:MM" formats a range. Optional data-tz-days preserves
+  // day-shift detection (rare — e.g. Fri 12:00 AM WAT = Thu PM in Americas).
+  (function convertAllTimes() {
+    if (typeof Intl === 'undefined' || !Intl.DateTimeFormat) return;
+
+    function getTzOffsetMinutes(tz, date) {
+      try {
+        const dtf = new Intl.DateTimeFormat('en-US', {
+          timeZone: tz, hourCycle: 'h23',
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+        });
+        const parts = {};
+        dtf.formatToParts(date).forEach((p) => { parts[p.type] = p.value; });
+        const tzWallMs = Date.UTC(
+          +parts.year, +parts.month - 1, +parts.day,
+          +parts.hour, +parts.minute, +parts.second
+        );
+        return (tzWallMs - date.getTime()) / 60000;
+      } catch (e) { return 0; }
+    }
+
+    // Convert HH:MM in sourceTz -> Date object (UTC epoch representing that wall time today)
+    function toUtcDate(hhmm, sourceTz) {
+      const parts = hhmm.split(':').map(Number);
+      const h = parts[0], m = parts[1] || 0;
+      if (isNaN(h) || isNaN(m)) return null;
+      const now = new Date();
+      // Naive UTC assuming the source wall time IS UTC
+      const naive = new Date(Date.UTC(
+        now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m, 0
+      ));
+      const offset = getTzOffsetMinutes(sourceTz, naive);
+      return new Date(naive.getTime() - offset * 60000);
+    }
+
+    function formatLocal(d, includeTz) {
+      const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
+      if (includeTz) opts.timeZoneName = 'short';
+      return new Intl.DateTimeFormat(undefined, opts).format(d);
+    }
+
+    document.querySelectorAll('[data-tz-start]').forEach((el) => {
+      const start = el.getAttribute('data-tz-start');
+      const end = el.getAttribute('data-tz-end');
+      const zone = el.getAttribute('data-tz-zone') || 'Africa/Lagos';
+      const startDate = toUtcDate(start, zone);
+      if (!startDate) return;
+      let text;
+      if (end) {
+        const endDate = toUtcDate(end, zone);
+        if (endDate && endDate < startDate) {
+          // overnight range: end is next day
+          endDate.setDate(endDate.getDate() + 1);
+        }
+        text = formatLocal(startDate, false) + '–' + formatLocal(endDate, true);
+      } else {
+        text = formatLocal(startDate, true);
+      }
+      // Some formatters emit "AM" / "PM" with narrow no-break space; normalize
+      text = text.replace(/ /g, ' ');
+      el.textContent = text;
+    });
+  })();
+
+  // "This Week at Kornerstone" — auto-update dates + today marker from local calendar
+  // Week runs Monday → Sunday (ISO). JS getDay(): 0=Sun...6=Sat, so we shift Sunday to 7.
+  // The "· Today" suffix is CSS pseudo-content (see styles.css), so this JS only
+  // has to toggle .today; it does NOT touch time text (that's owned by the
+  // timezone converter above).
+  (function updateThisWeek() {
+    const cards = document.querySelectorAll('.weekgrid .daycard[data-day]');
+    if (!cards.length) return;
+    const now = new Date();
+    const isoDay = (d) => (d === 0 ? 7 : d);
+    const todayIso = isoDay(now.getDay());
+    cards.forEach((card) => {
+      const cardDow = parseInt(card.dataset.day, 10);
+      if (isNaN(cardDow)) return;
+      const cardIso = isoDay(cardDow);
+      const cardDate = new Date(now);
+      cardDate.setDate(now.getDate() + (cardIso - todayIso));
+      const numEl = card.querySelector('.dnum');
+      if (numEl) numEl.textContent = cardDate.getDate();
+      card.classList.toggle('today', cardIso === todayIso);
+    });
+  })();
 })();
