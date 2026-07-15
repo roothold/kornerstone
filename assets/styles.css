@@ -188,6 +188,10 @@ p, .lead { text-wrap: pretty; }
 .svc .day { background: #fff; color: var(--ink); font-weight: 700; font-size: 12px; letter-spacing: .08em; padding: 7px 11px; border-radius: 7px; min-width: 52px; text-align: center; }
 .svc .when { color: #fff; font-size: .98rem; font-weight: 500; }
 .svc .when small { display: block; color: var(--muted-d); font-size: .8rem; font-weight: 400; }
+.svc-more { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.14); font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-2); transition: color .25s; }
+.svc-more:hover { color: #fff; }
+.svc-more .arw { font-family: var(--sans); font-size: 18px; letter-spacing: 0; transition: transform .3s var(--ease); }
+.svc-more:hover .arw { transform: translateX(4px); }
 .scroll-cue { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--sans); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.5); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 1; }
 .scroll-cue::after { content:''; width:1px; height:40px; background: linear-gradient(var(--blue-2), transparent); animation: pulse 2.2s infinite; }
 @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
