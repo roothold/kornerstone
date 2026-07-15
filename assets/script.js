@@ -71,19 +71,41 @@
   });
 
   // Booking / contact form (demo handler — no backend)
-  document.querySelectorAll('form[data-demo]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
+  // Real form submissions via FormSubmit AJAX. Any form marked with
+  // data-formsubmit posts to its `action` URL (FormSubmit ajax endpoint),
+  // shows an inline success/error message, and resets on success. Falls back
+  // to a normal POST + redirect if JS fails.
+  document.querySelectorAll('form[data-formsubmit]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = form.querySelector('[type="submit"]');
+      const btnOriginal = btn ? btn.textContent : '';
       const note = form.querySelector('.form-result') || (() => {
         const n = document.createElement('p');
         n.className = 'form-note form-result';
+        n.setAttribute('role', 'status');
+        n.setAttribute('aria-live', 'polite');
         form.appendChild(n);
         return n;
       })();
-      if (btn) { btn.textContent = 'Request received ✓'; btn.disabled = true; }
-      note.textContent = 'Thank you. Your request has been noted. Our team will reach out shortly. (This is a demo form — connect it to your email or scheduling tool before going live.)';
-      note.style.color = 'var(--gold-soft)';
+      note.textContent = '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      try {
+        const resp = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!resp.ok) throw new Error('Server rejected submission');
+        note.textContent = form.dataset.success || 'Thank you. Your message has been received.';
+        note.style.color = 'var(--gold-soft)';
+        if (btn) { btn.textContent = 'Sent ✓'; }
+        form.reset();
+      } catch (err) {
+        note.textContent = 'Something went wrong. Please try again, or email kstone@kstonecc.org directly.';
+        note.style.color = '#e74c3c';
+        if (btn) { btn.disabled = false; btn.textContent = btnOriginal; }
+      }
     });
   });
 

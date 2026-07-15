@@ -9,9 +9,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/styles.css" />
+<link rel="preload" as="image" href="assets/hero-prayer.jpg" fetchpriority="high" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+<meta name="theme-color" content="#0a0a0d" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kornerstone Prophetic Ministry" />
+<meta property="og:title" content="Kornerstone Prophetic Ministry — Hear God. Find Your People." />
+<meta property="og:description" content="A digital-first prophetic ministry for everyone seeking direction, depth and a community that shares their faith. Join online from anywhere, or in person in Lagos." />
+<meta property="og:url" content="https://kornerstone.vercel.app/" />
+<meta property="og:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Kornerstone Prophetic Ministry — Hear God. Find Your People." />
+<meta name="twitter:description" content="A digital-first prophetic ministry for everyone seeking direction, depth and a community that shares their faith." />
+<meta name="twitter:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<link rel="canonical" href="https://kornerstone.vercel.app/" />
 </head>
 <body>
 <header class="site-header">
@@ -326,7 +341,7 @@
           <li><a href="https://youtube.com/kstonecc" target="_blank" rel="noopener">Watch Live</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <form class="sub-form" data-demo style="margin-top:18px;"><input type="email" placeholder="Your email" required /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
+        <form class="sub-form" action="https://formsubmit.co/ajax/kstone@kstonecc.org" method="POST" data-formsubmit data-success="You're on the list — thanks for subscribing." style="margin-top:18px;"><input type="email" name="email" placeholder="Your email" required /><input type="hidden" name="_subject" value="New newsletter signup — Kornerstone" /><input type="hidden" name="_template" value="table" /><input type="hidden" name="_captcha" value="false" /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
       </div>
     </div>
     <div class="footer-bottom">
@@ -335,6 +350,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/script.js"></script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>

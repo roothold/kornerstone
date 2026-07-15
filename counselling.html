@@ -12,6 +12,20 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+<meta name="theme-color" content="#0a0a0d" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kornerstone Prophetic Ministry" />
+<meta property="og:title" content="Counselling — Kornerstone Prophetic Ministry" />
+<meta property="og:description" content="Confidential, faith-based counselling. Individual, marriage, pre-marital and ministry counselling — in person in Lagos or online worldwide. Book a session." />
+<meta property="og:url" content="https://kornerstone.vercel.app/counselling.html" />
+<meta property="og:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Counselling — Kornerstone Prophetic Ministry" />
+<meta name="twitter:description" content="Confidential faith-based counselling — in person in Lagos or online worldwide." />
+<meta name="twitter:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<link rel="canonical" href="https://kornerstone.vercel.app/counselling.html" />
 </head>
 <body>
 <header class="site-header">
@@ -115,24 +129,27 @@
   <div class="container" style="max-width:820px;">
     <div class="center reveal"><span class="eyebrow">Book a session</span><h2 class="h-lg">Counselling request form</h2><p class="lead center" style="margin:16px auto 0;">Share your details below. Everything you tell us is held in strict confidence.</p></div>
     <div class="form-card reveal" style="margin-top:42px;">
-      <form data-demo>
+      <form action="https://formsubmit.co/ajax/kstone@kstonecc.org" method="POST" data-formsubmit data-success="Thank you — your counselling request has been received. A member of our team will reach out to confirm your session shortly.">
+        <input type="hidden" name="_subject" value="New counselling request — Kornerstone" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
         <div class="field-row">
-          <div class="field"><label>Full name *</label><input type="text" required placeholder="Your full name" /></div>
-          <div class="field"><label>Phone number *</label><input type="tel" required placeholder="+234 …" /></div>
+          <div class="field"><label for="cn-name">Full name *</label><input id="cn-name" name="name" type="text" required placeholder="Your full name" /></div>
+          <div class="field"><label for="cn-phone">Phone number *</label><input id="cn-phone" name="phone" type="tel" required placeholder="+234 …" /></div>
         </div>
         <div class="field-row">
-          <div class="field"><label>Email *</label><input type="email" required placeholder="you@email.com" /></div>
-          <div class="field"><label>Preferred session type *</label>
-            <select required><option value="" disabled selected>Select…</option><option>Individual Counselling</option><option>Marriage Counselling</option><option>Pre-Marital Counselling</option><option>Leadership &amp; Ministry Counselling</option></select>
+          <div class="field"><label for="cn-email">Email *</label><input id="cn-email" name="email" type="email" required placeholder="you@email.com" /></div>
+          <div class="field"><label for="cn-type">Preferred session type *</label>
+            <select id="cn-type" name="session_type" required><option value="" disabled selected>Select…</option><option>Individual Counselling</option><option>Marriage Counselling</option><option>Pre-Marital Counselling</option><option>Leadership &amp; Ministry Counselling</option></select>
           </div>
         </div>
-        <div class="field"><label>Briefly, what would you like support with?</label><textarea placeholder="Share as much or as little as you feel comfortable with…"></textarea></div>
+        <div class="field"><label for="cn-support">Briefly, what would you like support with?</label><textarea id="cn-support" name="support_needs" placeholder="Share as much or as little as you feel comfortable with…"></textarea></div>
         <div class="field-row">
-          <div class="field"><label>Preferred date</label><input type="date" /></div>
+          <div class="field"><label for="cn-date">Preferred date</label><input id="cn-date" name="preferred_date" type="date" /></div>
           <div class="field"><label>Session format *</label>
             <div class="radio-row" style="margin-top:2px;">
-              <span class="radio-chip"><input type="radio" name="format" id="f-person" required /><label for="f-person">In person</label></span>
-              <span class="radio-chip"><input type="radio" name="format" id="f-virtual" /><label for="f-virtual">Online</label></span>
+              <span class="radio-chip"><input type="radio" name="format" id="f-person" value="In person" required /><label for="f-person">In person</label></span>
+              <span class="radio-chip"><input type="radio" name="format" id="f-virtual" value="Online" /><label for="f-virtual">Online</label></span>
             </div>
           </div>
         </div>
@@ -242,7 +259,7 @@
           <li><a href="https://youtube.com/kstonecc" target="_blank" rel="noopener">Watch Live</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <form class="sub-form" data-demo style="margin-top:18px;"><input type="email" placeholder="Your email" required /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
+        <form class="sub-form" action="https://formsubmit.co/ajax/kstone@kstonecc.org" method="POST" data-formsubmit data-success="You're on the list — thanks for subscribing." style="margin-top:18px;"><input type="email" name="email" placeholder="Your email" required /><input type="hidden" name="_subject" value="New newsletter signup — Kornerstone" /><input type="hidden" name="_template" value="table" /><input type="hidden" name="_captcha" value="false" /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
       </div>
     </div>
     <div class="footer-bottom">
@@ -251,6 +268,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/script.js"></script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>

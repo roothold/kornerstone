@@ -12,6 +12,20 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+<meta name="theme-color" content="#0a0a0d" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kornerstone Prophetic Ministry" />
+<meta property="og:title" content="Contact — Kornerstone Prophetic Ministry" />
+<meta property="og:description" content="We&#39;d love to hear from you. Reach Kornerstone Prophetic Ministry online from anywhere, or visit us in Ikoyi, Lagos." />
+<meta property="og:url" content="https://kornerstone.vercel.app/contact.html" />
+<meta property="og:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Contact — Kornerstone Prophetic Ministry" />
+<meta name="twitter:description" content="Reach us online from anywhere or in person in Ikoyi, Lagos." />
+<meta name="twitter:image" content="https://kornerstone.vercel.app/assets/hero-prayer.jpg" />
+<link rel="canonical" href="https://kornerstone.vercel.app/contact.html" />
 </head>
 <body>
 <header class="site-header">
@@ -84,13 +98,16 @@
     <div class="reveal" data-delay="1">
       <div class="form-card">
         <h3 class="h-md" style="margin-bottom:18px;">Send a message</h3>
-        <form data-demo>
+        <form action="https://formsubmit.co/ajax/kstone@kstonecc.org" method="POST" data-formsubmit data-success="Thank you — we've received your message and will be in touch shortly.">
+          <input type="hidden" name="_subject" value="New contact form message — Kornerstone" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
           <div class="field-row">
-            <div class="field"><label>Full name</label><input type="text" required placeholder="Your name" /></div>
-            <div class="field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
+            <div class="field"><label for="c-name">Full name</label><input id="c-name" name="name" type="text" required placeholder="Your name" /></div>
+            <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required placeholder="you@email.com" /></div>
           </div>
-          <div class="field"><label>Subject</label><input type="text" placeholder="How can we help?" /></div>
-          <div class="field"><label>Message</label><textarea placeholder="Tell us a little about what you need…"></textarea></div>
+          <div class="field"><label for="c-subject">Subject</label><input id="c-subject" name="subject" type="text" placeholder="How can we help?" /></div>
+          <div class="field"><label for="c-message">Message</label><textarea id="c-message" name="message" placeholder="Tell us a little about what you need…"></textarea></div>
           <button type="submit" class="btn btn--blue" style="width:100%;justify-content:center;">Send message</button>
         </form>
       </div>
@@ -141,7 +158,7 @@
           <li><a href="https://youtube.com/kstonecc" target="_blank" rel="noopener">Watch Live</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <form class="sub-form" data-demo style="margin-top:18px;"><input type="email" placeholder="Your email" required /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
+        <form class="sub-form" action="https://formsubmit.co/ajax/kstone@kstonecc.org" method="POST" data-formsubmit data-success="You're on the list — thanks for subscribing." style="margin-top:18px;"><input type="email" name="email" placeholder="Your email" required /><input type="hidden" name="_subject" value="New newsletter signup — Kornerstone" /><input type="hidden" name="_template" value="table" /><input type="hidden" name="_captcha" value="false" /><button class="btn btn--blue btn--sm" type="submit">Join</button></form>
       </div>
     </div>
     <div class="footer-bottom">
@@ -150,6 +167,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/script.js"></script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>
