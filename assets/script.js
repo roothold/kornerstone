@@ -315,6 +315,54 @@
     });
   })();
 
+  // Event countdown — any [data-event-target] section with a target ISO datetime
+  // ticks every second showing Days/Hours/Minutes/Seconds until start. After the
+  // event has ended (start + data-event-end-offset-hours, default 3), the whole
+  // section hides itself so the homepage stays clean without manual removal.
+  (function initEventCountdown() {
+    document.querySelectorAll('[data-event-target]').forEach((section) => {
+      const targetAttr = section.getAttribute('data-event-target');
+      const target = new Date(targetAttr).getTime();
+      if (isNaN(target)) return;
+      const endOffsetHrs = parseFloat(section.getAttribute('data-event-end-offset-hours') || '3');
+      const endTime = target + endOffsetHrs * 3600000;
+      const parts = {
+        days: section.querySelector('[data-ec="days"]'),
+        hours: section.querySelector('[data-ec="hours"]'),
+        minutes: section.querySelector('[data-ec="minutes"]'),
+        seconds: section.querySelector('[data-ec="seconds"]'),
+      };
+      const countdownEl = section.querySelector('.ec-countdown');
+      let timer = null;
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function tick() {
+        const now = Date.now();
+        if (now >= endTime) {
+          section.setAttribute('hidden', '');
+          if (timer) { clearInterval(timer); timer = null; }
+          return;
+        }
+        const diff = target - now;
+        if (diff <= 0) {
+          if (countdownEl && !countdownEl.querySelector('.ec-live')) {
+            countdownEl.innerHTML = '<span class="ec-live">Happening now</span>';
+          }
+          return;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff / 3600000) % 24);
+        const mins = Math.floor((diff / 60000) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        if (parts.days) parts.days.textContent = String(days);
+        if (parts.hours) parts.hours.textContent = pad(hours);
+        if (parts.minutes) parts.minutes.textContent = pad(mins);
+        if (parts.seconds) parts.seconds.textContent = pad(secs);
+      }
+      tick();
+      timer = setInterval(tick, 1000);
+    });
+  })();
+
   // "This Week at Kornerstone" — auto-update dates + today marker from local calendar
   // Week runs Monday → Sunday (ISO). JS getDay(): 0=Sun...6=Sat, so we shift Sunday to 7.
   // The "· Today" suffix is CSS pseudo-content (see styles.css), so this JS only
