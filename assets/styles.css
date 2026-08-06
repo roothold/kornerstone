@@ -162,6 +162,18 @@ p, .lead { text-wrap: pretty; }
 }
 /* Portrait hero (praying subject) — shift subject right of the H1, lighten overlay so silhouette reads */
 .hero__bg--portrait img { opacity: .78; object-position: 70% center; }
+/* --- Ambient tranquility layer (canvas + slow scroll parallax) --- */
+.hero__fx {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+  mix-blend-mode: screen;
+  opacity: .95;
+}
+.hero__bg { will-change: transform; }
+.hero__bg img { will-change: transform, opacity; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__fx { opacity: .55; }
+}
 .hero__bg--portrait::after {
   background:
     linear-gradient(95deg, rgba(6,7,12,0.86) 0%, rgba(6,7,12,0.58) 42%, rgba(6,7,12,0.28) 100%),

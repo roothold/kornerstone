@@ -109,108 +109,98 @@
     });
   });
 
-  // Cinematic hero background — prophetic light, sweeping beams & rising embers of faith
+  // Hero atmosphere — a tranquil, prophetic light layer designed to give the
+  // GOD effect: slow drifting light particles (dust motes in a sunbeam), a
+  // soft vertical light beam descending from above, and a gentle radial pulse
+  // that breathes at ~15s intervals. Blue palette, respects prefers-reduced-motion.
+  // Also applies a subtle scroll parallax to the hero photo for 3D depth.
   const heroCanvas = document.getElementById('heroFx');
   if (heroCanvas && heroCanvas.getContext) {
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = heroCanvas.getContext('2d');
     let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let embers = [], orbs = [], beams = [], raf = null, t = 0;
+    let motes = [], raf = null, t = 0;
 
-    const PURPLES = ['139,92,246', '99,102,241', '177,92,247'];
-    const GOLD = '216,181,107';
+    // Colour palette — matches Awaken brand (Heavenly Sky + Graceful Blue) with pure white for highlights.
+    const BLUE   = '35,95,223';   // #235FDF
+    const SKY    = '96,157,201';  // #609DC9
+    const WHITE  = '255,255,255';
 
     function resize() {
       const r = heroCanvas.getBoundingClientRect();
       W = r.width; H = r.height;
-      heroCanvas.width = Math.floor(W * dpr);
+      heroCanvas.width  = Math.floor(W * dpr);
       heroCanvas.height = Math.floor(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      build();
+      seed();
     }
 
-    function build() {
-      // Slow drifting glow orbs (depth + atmosphere)
-      orbs = [
-        { x: W * 0.78, y: H * 0.22, r: Math.max(W, H) * 0.55, c: PURPLES[0], a: 0.22, vx: 0.05, vy: 0.02 },
-        { x: W * 0.12, y: H * 0.80, r: Math.max(W, H) * 0.50, c: PURPLES[1], a: 0.18, vx: -0.04, vy: -0.03 },
-        { x: W * 0.50, y: H * 1.05, r: Math.max(W, H) * 0.40, c: GOLD, a: 0.08, vx: 0.02, vy: 0 }
-      ];
-      // Light beams of "direction" descending from above
-      beams = [];
-      const n = W < 700 ? 3 : 5;
-      for (let i = 0; i < n; i++) {
-        beams.push({
-          x: W * (0.12 + 0.18 * i) + (Math.random() * 60 - 30),
-          w: 60 + Math.random() * 90,
-          sway: 0.4 + Math.random() * 0.7,
-          phase: Math.random() * Math.PI * 2,
-          a: 0.05 + Math.random() * 0.06,
-          c: PURPLES[i % PURPLES.length]
-        });
-      }
-      // Rising embers (faith ascending)
-      const count = reduce ? 26 : (W < 700 ? 40 : 70);
-      embers = [];
-      for (let i = 0; i < count; i++) embers.push(newEmber(true));
+    function seed() {
+      // Light particles — slow, sparse, drifting upward like dust in a sunbeam.
+      const count = reduce ? 26 : (W < 700 ? 42 : 70);
+      motes = [];
+      for (let i = 0; i < count; i++) motes.push(newMote(true));
     }
 
-    function newEmber(seed) {
+    function newMote(alive) {
       return {
         x: Math.random() * W,
-        y: seed ? Math.random() * H : H + 10,
-        s: 0.6 + Math.random() * 2.0,
-        vy: 0.18 + Math.random() * 0.55,
-        drift: (Math.random() - 0.5) * 0.25,
-        tw: Math.random() * Math.PI * 2,
-        tws: 0.01 + Math.random() * 0.03,
-        gold: Math.random() < 0.32
+        y: alive ? Math.random() * H : H + 10,
+        s: 0.7 + Math.random() * 2.2,          // size
+        vy: 0.06 + Math.random() * 0.22,       // vertical drift (very slow)
+        drift: (Math.random() - 0.5) * 0.14,   // gentle horizontal sway
+        tw: Math.random() * Math.PI * 2,       // twinkle phase
+        tws: 0.005 + Math.random() * 0.015,    // twinkle speed (slow)
+        warm: Math.random() < 0.25,            // 25% warm-white, 75% cool-white/blue
       };
     }
 
     function frame() {
       t += 1;
       ctx.clearRect(0, 0, W, H);
-
-      // glow orbs
       ctx.globalCompositeOperation = 'lighter';
-      orbs.forEach((o) => {
-        o.x += o.vx; o.y += o.vy;
-        if (o.x < -o.r) o.x = W + o.r; if (o.x > W + o.r) o.x = -o.r;
-        const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
-        g.addColorStop(0, 'rgba(' + o.c + ',' + o.a + ')');
-        g.addColorStop(1, 'rgba(' + o.c + ',0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, W, H);
-      });
 
-      // descending beams of light
-      beams.forEach((b) => {
-        const off = Math.sin(t * 0.004 * b.sway + b.phase) * 40;
-        const x = b.x + off;
-        const pulse = 0.6 + 0.4 * Math.sin(t * 0.01 + b.phase);
-        const g = ctx.createLinearGradient(x, 0, x + b.w * 0.4, H);
-        g.addColorStop(0, 'rgba(' + b.c + ',' + (b.a * pulse) + ')');
-        g.addColorStop(0.6, 'rgba(' + b.c + ',' + (b.a * pulse * 0.25) + ')');
-        g.addColorStop(1, 'rgba(' + b.c + ',0)');
+      // 1. Wide radial glow (breathing) — centered slightly above the middle.
+      const pulse = 0.55 + 0.25 * Math.sin(t * 0.0025); // very slow breath
+      const glow = ctx.createRadialGradient(W * 0.5, H * 0.42, 0, W * 0.5, H * 0.42, Math.max(W, H) * 0.75);
+      glow.addColorStop(0.0, 'rgba(' + SKY + ',' + (0.18 * pulse) + ')');
+      glow.addColorStop(0.5, 'rgba(' + BLUE + ',' + (0.05 * pulse) + ')');
+      glow.addColorStop(1.0, 'rgba(' + BLUE + ',0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+
+      // 2. Volumetric light beam descending from above (God-light).
+      const beamSway = Math.sin(t * 0.001) * 24;
+      const cx = W * 0.68 + beamSway; // beam centre — right of subject
+      const beamW = Math.max(180, W * 0.28);
+      const beam = ctx.createLinearGradient(cx, 0, cx + beamW * 0.15, H);
+      beam.addColorStop(0.0, 'rgba(' + WHITE + ',0.14)');
+      beam.addColorStop(0.35, 'rgba(' + SKY + ',0.08)');
+      beam.addColorStop(1.0, 'rgba(' + BLUE + ',0)');
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(cx - beamW * 0.15, 0);
+      ctx.lineTo(cx + beamW * 0.15, 0);
+      ctx.lineTo(cx + beamW * 0.9,  H);
+      ctx.lineTo(cx - beamW * 0.9,  H);
+      ctx.closePath();
+      ctx.fill();
+
+      // 3. Slow-drifting light motes (dust in a sunbeam).
+      motes.forEach((m) => {
+        m.y -= m.vy;
+        m.x += m.drift;
+        m.tw += m.tws;
+        if (m.y < -10) Object.assign(m, newMote(false));
+        const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(m.tw));
+        const col = m.warm ? WHITE : SKY;
+        const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.s * 4.5);
+        g.addColorStop(0.0, 'rgba(' + col + ',' + (0.85 * tw) + ')');
+        g.addColorStop(1.0, 'rgba(' + col + ',0)');
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.moveTo(x, 0); ctx.lineTo(x + b.w, 0);
-        ctx.lineTo(x + b.w * 1.7 + 60, H); ctx.lineTo(x + b.w * 0.7 - 60, H);
-        ctx.closePath(); ctx.fill();
-      });
-
-      // rising embers
-      embers.forEach((p) => {
-        p.y -= p.vy; p.x += p.drift; p.tw += p.tws;
-        if (p.y < -10) Object.assign(p, newEmber(false));
-        const tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(p.tw));
-        const col = p.gold ? GOLD : PURPLES[0];
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.s * 4);
-        g.addColorStop(0, 'rgba(' + col + ',' + (0.9 * tw) + ')');
-        g.addColorStop(1, 'rgba(' + col + ',0)');
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.s * 4, 0, Math.PI * 2); ctx.fill();
+        ctx.arc(m.x, m.y, m.s * 4.5, 0, Math.PI * 2);
+        ctx.fill();
       });
 
       ctx.globalCompositeOperation = 'source-over';
@@ -218,15 +208,42 @@
     }
 
     resize();
-    window.addEventListener('resize', () => { dpr = Math.min(window.devicePixelRatio || 1, 2); resize(); }, { passive: true });
+    window.addEventListener('resize', () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      resize();
+    }, { passive: true });
+
     if (reduce) {
-      frame(); cancelAnimationFrame(raf); raf = null; // draw a single static frame
+      // Draw a single static composed frame (still atmospheric, but no motion).
+      frame();
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
     } else {
       frame();
+      // Pause the animation when the tab isn't visible to save battery.
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; } }
         else if (!raf) { frame(); }
       });
+    }
+
+    // 4. Very subtle scroll parallax on the hero photo — the image shifts up
+    //    at ~30% of scroll speed, giving a sense of depth without dizziness.
+    const heroBg = heroCanvas.parentElement;
+    const heroImg = heroBg && heroBg.querySelector('img');
+    if (heroImg && !reduce) {
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = Math.min(400, window.scrollY);
+          heroImg.style.transform = 'translate3d(0, ' + (y * 0.18) + 'px, 0) scale(1.05)';
+          heroCanvas.style.transform = 'translate3d(0, ' + (y * 0.10) + 'px, 0)';
+          ticking = false;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }
   }
 
