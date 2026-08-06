@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /color-options.html
 
-Sitemap: https://kornerstone.vercel.app/sitemap.xml
+Sitemap: https://kstonecc.org/sitemap.xml
