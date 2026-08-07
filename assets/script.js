@@ -119,7 +119,7 @@
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = heroCanvas.getContext('2d');
     let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let motes = [], raf = null, t = 0;
+    let raf = null, t = 0;
 
     // Colour palette — matches Awaken brand (Heavenly Sky + Graceful Blue) with pure white for highlights.
     const BLUE   = '35,95,223';   // #235FDF
@@ -136,23 +136,8 @@
     }
 
     function seed() {
-      // Light particles — slow, sparse, drifting upward like dust in a sunbeam.
-      const count = reduce ? 26 : (W < 700 ? 42 : 70);
-      motes = [];
-      for (let i = 0; i < count; i++) motes.push(newMote(true));
-    }
-
-    function newMote(alive) {
-      return {
-        x: Math.random() * W,
-        y: alive ? Math.random() * H : H + 10,
-        s: 0.7 + Math.random() * 2.2,          // size
-        vy: 0.06 + Math.random() * 0.22,       // vertical drift (very slow)
-        drift: (Math.random() - 0.5) * 0.14,   // gentle horizontal sway
-        tw: Math.random() * Math.PI * 2,       // twinkle phase
-        tws: 0.005 + Math.random() * 0.015,    // twinkle speed (slow)
-        warm: Math.random() < 0.25,            // 25% warm-white, 75% cool-white/blue
-      };
+      // No particles — a close relationship with God through prayer is best
+      // represented by stillness and light, not decorative motion.
     }
 
     function frame() {
@@ -185,23 +170,6 @@
       ctx.lineTo(cx - beamW * 0.9,  H);
       ctx.closePath();
       ctx.fill();
-
-      // 3. Slow-drifting light motes (dust in a sunbeam).
-      motes.forEach((m) => {
-        m.y -= m.vy;
-        m.x += m.drift;
-        m.tw += m.tws;
-        if (m.y < -10) Object.assign(m, newMote(false));
-        const tw = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(m.tw));
-        const col = m.warm ? WHITE : SKY;
-        const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.s * 4.5);
-        g.addColorStop(0.0, 'rgba(' + col + ',' + (0.85 * tw) + ')');
-        g.addColorStop(1.0, 'rgba(' + col + ',0)');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.s * 4.5, 0, Math.PI * 2);
-        ctx.fill();
-      });
 
       ctx.globalCompositeOperation = 'source-over';
       raf = requestAnimationFrame(frame);
