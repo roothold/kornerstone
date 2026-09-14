@@ -636,3 +636,8 @@ form select { appearance: none; cursor: pointer; }
   .hero__actions .btn { width: 100%; justify-content: center; }
   .container { padding-inline: 22px; }
 }
+
+
+/* Event card CTA affordance */
+.event-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--display); font-weight: 600; font-size: .84rem; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); transition: gap .25s var(--ease), color .25s; }
+a.event-card:hover .event-more { gap: 10px; color: var(--blue-2, var(--blue)); }
