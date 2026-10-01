@@ -646,7 +646,7 @@ a.event-card:hover .event-more { gap: 10px; color: var(--blue-2, var(--blue)); }
    Sister-site bar (above header) + homepage giving-promo
    ============================================================ */
 .sister-bar { background: #050507; color: #c9ccd3; font-size: 12.5px; border-bottom: 1px solid rgba(255,255,255,.06); }
-.sister-bar__inner { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; gap: 20px; flex-wrap: wrap; }
+.sister-bar__inner { display: flex; align-items: center; justify-content: space-between; padding-block: 8px; gap: 20px; flex-wrap: wrap; }
 .sister-bar__who { font-family: var(--display); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: 11px; color: var(--muted-d); }
 .sister-bar__link { color: #fff; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
 .sister-bar__link:hover { color: var(--blue-2, #8fb4ff); }
