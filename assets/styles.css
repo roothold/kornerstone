@@ -641,3 +641,27 @@ form select { appearance: none; cursor: pointer; }
 /* Event card CTA affordance */
 .event-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--display); font-weight: 600; font-size: .84rem; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); transition: gap .25s var(--ease), color .25s; }
 a.event-card:hover .event-more { gap: 10px; color: var(--blue-2, var(--blue)); }
+
+
+/* ============================================================
+   Sister-site bar (above header) + homepage giving-promo
+   ============================================================ */
+.sister-bar { background: #050507; color: #c9ccd3; font-size: 12.5px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.sister-bar__inner { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; gap: 20px; flex-wrap: wrap; }
+.sister-bar__who { font-family: var(--display); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: 11px; color: var(--muted-d); }
+.sister-bar__link { color: #fff; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.sister-bar__link:hover { color: var(--blue-2, #8fb4ff); }
+@media (max-width: 560px) {
+  .sister-bar__who { display: none; }
+  .sister-bar__inner { justify-content: center; }
+}
+
+.giving-promo { padding-top: 70px; padding-bottom: 70px; }
+.give-promo-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+.give-promo-card { display: block; background: var(--ink); color: #fff; border-radius: var(--radius); padding: 36px; text-decoration: none; transition: transform .4s var(--ease), box-shadow .4s; border: 1px solid rgba(255,255,255,.08); }
+.give-promo-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -24px rgba(35,95,223,.45); }
+.give-promo-card__tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-2, var(--blue)); background: rgba(35,95,223,.14); padding: 4px 10px; border-radius: 999px; margin-bottom: 16px; }
+.give-promo-card h3 { color: #fff; font-size: 1.4rem; margin: 0 0 10px; }
+.give-promo-card p { color: #c9ccd3; margin: 0 0 20px; font-size: .96rem; }
+.give-promo-card__arrow { display: inline-flex; align-items: center; gap: 6px; color: var(--blue-2, #8fb4ff); font-family: var(--display); font-weight: 600; font-size: .9rem; letter-spacing: .06em; }
+@media (max-width: 900px) { .give-promo-grid { grid-template-columns: 1fr; gap: 32px; } }
