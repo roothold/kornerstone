@@ -54,3 +54,13 @@ GitHub lets you make changes on a **new branch** instead of `main`. On the commi
 - Site breaks or won't deploy: Michael (michael@surpluspods.com)
 - Design/content copy: the person who made the request
 - Content calendar: Kornerstone team lead
+
+### 6. Add photos to the Event Images gallery (ministry)
+
+The gallery page (`event-images.html`) is generated, so do not edit it by hand.
+
+1. Put the web-sized photo in `assets/gallery/21-days-of-worship/full/` (WebP, 1600px on the long edge) and a 640px-wide copy with the same filename in `thumb/`. Name them by day and order, e.g. `d12-01.webp`.
+2. Add one row per photo to `assets/gallery/21-days-of-worship/manifest.json`: `["d12-01", "12", "original-filename.jpg", width, height]`.
+3. Run `python3 tools/build-gallery.py` from the repo root and commit the result. A new "Day 12" filter chip appears automatically.
+
+The homepage "Happening now" photo band lives in `index.html` under the `EVENT IMAGES` comment. Remove or reword it once the event ends.
